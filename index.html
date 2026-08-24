@@ -9,7 +9,7 @@
       maximum-scale=1.0,
       user-scalable=no">
 
-<title>3企画ボード</title>
+<title>3企画切り替えボード</title>
 
 <style>
 
@@ -36,26 +36,28 @@ body {
     "Noto Sans JP",
     sans-serif;
 
-  color: #222222;
+  color: #222;
 }
 
 
-/* ================================
+/* =========================
    企画切り替え
-================================ */
+========================= */
 
 #projectTabs {
   width: 100%;
   max-width: 1000px;
+
   margin: 0 auto 8px;
 
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
   gap: 5px;
 }
 
 .projectTab {
-  min-height: 43px;
+  min-height: 44px;
 
   border: none;
   border-radius: 8px;
@@ -80,9 +82,9 @@ body {
 }
 
 
-/* ================================
+/* =========================
    設定
-================================ */
+========================= */
 
 #settings {
   width: 100%;
@@ -98,7 +100,7 @@ body {
 }
 
 #settings-title {
-  margin: 0 0 10px;
+  margin-bottom: 10px;
 
   text-align: center;
 
@@ -107,9 +109,9 @@ body {
 }
 
 
-/* ================================
-   入力欄
-================================ */
+/* =========================
+   設定入力
+========================= */
 
 .setting-row {
   margin-bottom: 9px;
@@ -137,13 +139,14 @@ body {
   border-radius: 7px;
 
   font-size: 16px;
+
   outline: none;
 }
 
 
-/* ================================
+/* =========================
    ボタン
-================================ */
+========================= */
 
 .buttons {
   display: grid;
@@ -186,22 +189,18 @@ button:active {
   background: #f57c00;
 }
 
-#resetButton {
-  background: #e53935;
-}
-
-#liveButton {
-  background: #555555;
-}
-
 #saveNamesButton {
   background: #43a047;
 }
 
+#resetButton {
+  background: #e53935;
+}
 
-/* ================================
+
+/* =========================
    名称一覧
-================================ */
+========================= */
 
 #nameEditor {
   margin-top: 12px;
@@ -281,9 +280,9 @@ button:active {
 }
 
 
-/* ================================
+/* =========================
    モード
-================================ */
+========================= */
 
 #mode {
   width: 100%;
@@ -299,9 +298,9 @@ button:active {
 }
 
 
-/* ================================
+/* =========================
    タイトル
-================================ */
+========================= */
 
 #title {
   width: 100%;
@@ -322,9 +321,9 @@ button:active {
 }
 
 
-/* ================================
+/* =========================
    ボード
-================================ */
+========================= */
 
 #board {
   width: 100%;
@@ -341,9 +340,9 @@ button:active {
 }
 
 
-/* ================================
+/* =========================
    マス
-================================ */
+========================= */
 
 .cell {
   width: 100%;
@@ -385,9 +384,9 @@ button:active {
 }
 
 
-/* ================================
+/* =========================
    マス名称
-================================ */
+========================= */
 
 .cell-name {
   display: block;
@@ -416,9 +415,9 @@ button:active {
 }
 
 
-/* ================================
+/* =========================
    視聴者名
-================================ */
+========================= */
 
 .cell-user {
   display: block;
@@ -449,9 +448,10 @@ button:active {
 }
 
 
-/* ================================
-   名前が入ったマス
-================================ */
+/* =========================
+   名前入力後
+   赤マス＋白文字
+========================= */
 
 .cell.completed {
   background: #e53935;
@@ -465,34 +465,9 @@ button:active {
 }
 
 
-/* ================================
-   配信用画面
-================================ */
-
-body.live {
-  padding: 0 4px 40px;
-}
-
-body.live #settings {
-  display: none;
-}
-
-body.live #mode {
-  display: none;
-}
-
-body.live #projectTabs {
-  margin-top: 5px;
-}
-
-body.live #title {
-  margin-top: 7px;
-}
-
-
-/* ================================
-   多いマス
-================================ */
+/* =========================
+   100〜200マス
+========================= */
 
 .many .cell {
   min-height: 50px;
@@ -512,9 +487,34 @@ body.live #title {
 }
 
 
-/* ================================
+/* =========================
+   少ないマス
+========================= */
+
+.board-one {
+  grid-template-columns:
+    repeat(1, 1fr) !important;
+}
+
+.board-two {
+  grid-template-columns:
+    repeat(2, 1fr) !important;
+}
+
+.board-three {
+  grid-template-columns:
+    repeat(3, 1fr) !important;
+}
+
+.board-four {
+  grid-template-columns:
+    repeat(4, 1fr) !important;
+}
+
+
+/* =========================
    スマホ
-================================ */
+========================= */
 
 @media (max-width: 500px) {
 
@@ -560,31 +560,6 @@ body.live #title {
 
 }
 
-
-/* ================================
-   少ないマス
-================================ */
-
-.board-one {
-  grid-template-columns:
-    repeat(1, 1fr) !important;
-}
-
-.board-two {
-  grid-template-columns:
-    repeat(2, 1fr) !important;
-}
-
-.board-three {
-  grid-template-columns:
-    repeat(3, 1fr) !important;
-}
-
-.board-four {
-  grid-template-columns:
-    repeat(4, 1fr) !important;
-}
-
 </style>
 </head>
 
@@ -592,9 +567,9 @@ body.live #title {
 <body>
 
 
-<!-- ==========================================
+<!-- =========================
      企画切り替え
-========================================== -->
+========================= -->
 
 <div id="projectTabs">
 
@@ -619,24 +594,16 @@ body.live #title {
 </div>
 
 
-<!-- ==========================================
+<!-- =========================
      設定
-========================================== -->
+========================= -->
 
 <div id="settings">
 
   <div id="settings-title">
-
-    ⚙️
-    <span id="settingsProject">
-      企画①
-    </span>
-    ボード設定
-
+    ⚙️ 企画① ボード設定
   </div>
 
-
-  <!-- タイトル -->
 
   <div class="setting-row">
 
@@ -651,8 +618,6 @@ body.live #title {
 
   </div>
 
-
-  <!-- マス数 -->
 
   <div class="setting-row">
 
@@ -669,8 +634,6 @@ body.live #title {
 
   </div>
 
-
-  <!-- ボタン -->
 
   <div class="buttons">
 
@@ -690,16 +653,12 @@ body.live #title {
       🔄 名前リセット
     </button>
 
-    <button id="liveButton">
-      📺 配信用画面
-    </button>
-
   </div>
 
 
-  <!-- ========================================
-       マス名称一覧
-  ======================================== -->
+  <!-- =========================
+       名称一覧
+  ========================= -->
 
   <div id="nameEditor">
 
@@ -714,27 +673,27 @@ body.live #title {
 </div>
 
 
-<!-- ==========================================
+<!-- =========================
      モード
-========================================== -->
+========================= -->
 
 <div id="mode">
-  ✏️ 名前を書くモード
+  ✏️ マスをタップすると名前を書けます
 </div>
 
 
-<!-- ==========================================
+<!-- =========================
      タイトル
-========================================== -->
+========================= -->
 
 <div id="title">
   47都道府県制覇！
 </div>
 
 
-<!-- ==========================================
+<!-- =========================
      ボード
-========================================== -->
+========================= -->
 
 <div id="board"></div>
 
@@ -742,9 +701,9 @@ body.live #title {
 <script>
 
 
-/* =================================================
+/* ==========================================
    都道府県
-================================================= */
+========================================== */
 
 const prefectures = [
 
@@ -806,40 +765,28 @@ const prefectures = [
 ];
 
 
-/* =================================================
-   初期マス作成
-================================================= */
+/* ==========================================
+   初期マス
+========================================== */
 
-function makeCells(
-  count,
-  prefectureMode
-) {
+function makeCells(count, usePrefectures) {
 
   const result = [];
 
-  for (
-    let i = 0;
-    i < count;
-    i++
-  ) {
+  for (let i = 0; i < count; i++) {
 
     let name;
 
     if (
-      prefectureMode &&
+      usePrefectures &&
       i < prefectures.length
     ) {
 
-      name =
-        prefectures[i];
+      name = prefectures[i];
 
-    }
+    } else {
 
-    else {
-
-      name =
-        "マス" +
-        (i + 1);
+      name = "マス" + (i + 1);
 
     }
 
@@ -858,66 +805,51 @@ function makeCells(
 }
 
 
-/* =================================================
-   3企画
-================================================= */
+/* ==========================================
+   3つの企画
+========================================== */
 
 const projects = {
 
   1: {
 
-    title:
-      "47都道府県制覇！",
+    title: "47都道府県制覇！",
 
-    count:
-      47,
+    count: 47,
 
     cells:
-      makeCells(
-        47,
-        true
-      )
+      makeCells(47, true)
 
   },
 
   2: {
 
-    title:
-      "企画②",
+    title: "企画②",
 
-    count:
-      25,
+    count: 25,
 
     cells:
-      makeCells(
-        25,
-        false
-      )
+      makeCells(25, false)
 
   },
 
   3: {
 
-    title:
-      "企画③",
+    title: "企画③",
 
-    count:
-      25,
+    count: 25,
 
     cells:
-      makeCells(
-        25,
-        false
-      )
+      makeCells(25, false)
 
   }
 
 };
 
 
-/* =================================================
+/* ==========================================
    保存データ読み込み
-================================================= */
+========================================== */
 
 function loadData() {
 
@@ -925,7 +857,7 @@ function loadData() {
 
     const saved =
       localStorage.getItem(
-        "threeProjectBoard_v2"
+        "threeProjectBoard_v3"
       );
 
     if (!saved) {
@@ -935,11 +867,7 @@ function loadData() {
     const data =
       JSON.parse(saved);
 
-    for (
-      let i = 1;
-      i <= 3;
-      i++
-    ) {
+    for (let i = 1; i <= 3; i++) {
 
       if (!data[i]) {
         continue;
@@ -966,9 +894,7 @@ function loadData() {
       }
 
       if (
-        Array.isArray(
-          data[i].cells
-        )
+        Array.isArray(data[i].cells)
       ) {
 
         projects[i].cells =
@@ -978,14 +904,9 @@ function loadData() {
 
     }
 
-  }
+  } catch (e) {
 
-  catch (e) {
-
-    console.log(
-      "読み込みエラー",
-      e
-    );
+    console.log(e);
 
   }
 
@@ -995,157 +916,76 @@ function loadData() {
 loadData();
 
 
-/* =================================================
+/* ==========================================
    現在の企画
-================================================= */
+========================================== */
 
-let currentProject =
-  1;
-
-
-/* =================================================
-   モード
-================================================= */
-
-let mode =
-  "name";
+let currentProject = 1;
 
 
-/* =================================================
+/* ==========================================
    要素
-================================================= */
+========================================== */
 
 const board =
-  document.getElementById(
-    "board"
-  );
+  document.getElementById("board");
 
 const title =
-  document.getElementById(
-    "title"
-  );
+  document.getElementById("title");
 
 const titleInput =
-  document.getElementById(
-    "titleInput"
-  );
+  document.getElementById("titleInput");
 
 const countInput =
-  document.getElementById(
-    "countInput"
-  );
+  document.getElementById("countInput");
 
 const nameList =
-  document.getElementById(
-    "nameList"
-  );
+  document.getElementById("nameList");
 
-const modeText =
+const settingsTitle =
   document.getElementById(
-    "mode"
-  );
-
-const settingsProject =
-  document.getElementById(
-    "settingsProject"
+    "settings-title"
   );
 
 
-/* =================================================
-   現在の企画取得
-================================================= */
+/* ==========================================
+   現在の企画データ
+========================================== */
 
 function getProject() {
 
-  return projects[
-    currentProject
-  ];
+  return projects[currentProject];
 
 }
 
 
-/* =================================================
-   全体保存
-================================================= */
+/* ==========================================
+   保存
+========================================== */
 
 function saveData() {
 
-  try {
+  localStorage.setItem(
 
-    localStorage.setItem(
+    "threeProjectBoard_v3",
 
-      "threeProjectBoard_v2",
+    JSON.stringify(projects)
 
-      JSON.stringify(
-        projects
-      )
-
-    );
-
-  }
-
-  catch (e) {
-
-    console.log(
-      "保存エラー",
-      e
-    );
-
-  }
+  );
 
 }
 
 
-/* =================================================
-   企画切り替え
-================================================= */
+/* ==========================================
+   マス数調整
+========================================== */
 
-function switchProject(
-  number
-) {
-
-  saveData();
-
-  currentProject =
-    number;
-
-  document
-    .querySelectorAll(
-      ".projectTab"
-    )
-    .forEach(
-      function(tab, index) {
-
-        tab.classList.toggle(
-          "active",
-          index + 1 === number
-        );
-
-      }
-    );
-
-  render();
-
-}
-
-
-/* =================================================
-   マス数を調整
-================================================= */
-
-function adjustCells(
-  project
-) {
+function adjustCells(project) {
 
   let count =
-    parseInt(
-      project.count,
-      10
-    );
+    parseInt(project.count, 10);
 
-  if (
-    isNaN(count)
-  ) {
+  if (isNaN(count)) {
     count = 1;
   }
 
@@ -1158,13 +998,11 @@ function adjustCells(
       )
     );
 
-  project.count =
-    count;
+  project.count = count;
 
 
   while (
-    project.cells.length <
-    count
+    project.cells.length < count
   ) {
 
     const number =
@@ -1173,11 +1011,9 @@ function adjustCells(
     project.cells.push({
 
       name:
-        "マス" +
-        number,
+        "マス" + number,
 
-      user:
-        ""
+      user: ""
 
     });
 
@@ -1185,8 +1021,7 @@ function adjustCells(
 
 
   if (
-    project.cells.length >
-    count
+    project.cells.length > count
   ) {
 
     project.cells =
@@ -1200,17 +1035,16 @@ function adjustCells(
 }
 
 
-/* =================================================
-   名称一覧を表示
-================================================= */
+/* ==========================================
+   名称一覧
+========================================== */
 
 function renderNameList() {
 
   const project =
     getProject();
 
-  nameList.innerHTML =
-    "";
+  nameList.innerHTML = "";
 
 
   project.cells.forEach(
@@ -1252,10 +1086,6 @@ function renderNameList() {
         data.name;
 
 
-      /*
-       入力中はデータにも反映
-      */
-
       input.addEventListener(
         "input",
         function() {
@@ -1267,18 +1097,11 @@ function renderNameList() {
       );
 
 
-      row.appendChild(
-        number
-      );
+      row.appendChild(number);
 
-      row.appendChild(
-        input
-      );
+      row.appendChild(input);
 
-
-      nameList.appendChild(
-        row
-      );
+      nameList.appendChild(row);
 
     }
   );
@@ -1286,9 +1109,9 @@ function renderNameList() {
 }
 
 
-/* =================================================
+/* ==========================================
    ボード表示
-================================================= */
+========================================== */
 
 function render() {
 
@@ -1296,13 +1119,12 @@ function render() {
     getProject();
 
 
-  adjustCells(
-    project
-  );
+  adjustCells(project);
 
 
   title.textContent =
-    project.title;
+    project.title ||
+    "参加型企画";
 
 
   titleInput.value =
@@ -1313,57 +1135,41 @@ function render() {
     project.count;
 
 
-  settingsProject.textContent =
-    "企画" +
+  settingsTitle.textContent =
+    "⚙️ 企画" +
     currentProject +
-    "：";
+    " ボード設定";
 
 
-  board.innerHTML =
-    "";
+  board.innerHTML = "";
+
+  board.className = "";
 
 
-  board.className =
-    "";
+  /* 列数 */
 
-
-  /*
-   列数
-  */
-
-  if (
-    project.count === 1
-  ) {
+  if (project.count === 1) {
 
     board.classList.add(
       "board-one"
     );
 
   }
-
-  else if (
-    project.count === 2
-  ) {
+  else if (project.count === 2) {
 
     board.classList.add(
       "board-two"
     );
 
   }
-
-  else if (
-    project.count === 3
-  ) {
+  else if (project.count === 3) {
 
     board.classList.add(
       "board-three"
     );
 
   }
-
-  else if (
-    project.count === 4
-  ) {
+  else if (project.count === 4) {
 
     board.classList.add(
       "board-four"
@@ -1372,9 +1178,7 @@ function render() {
   }
 
 
-  if (
-    project.count >= 100
-  ) {
+  if (project.count >= 100) {
 
     board.classList.add(
       "many"
@@ -1383,9 +1187,7 @@ function render() {
   }
 
 
-  /*
-   マス作成
-  */
+  /* マス作成 */
 
   project.cells.forEach(
     function(data, index) {
@@ -1399,10 +1201,6 @@ function render() {
         "cell";
 
 
-      /*
-       名前が入っている
-      */
-
       if (
         data.user &&
         data.user.trim() !== ""
@@ -1414,10 +1212,6 @@ function render() {
 
       }
 
-
-      /*
-       名称
-      */
 
       const name =
         document.createElement(
@@ -1431,10 +1225,6 @@ function render() {
         data.name;
 
 
-      /*
-       視聴者名
-      */
-
       const user =
         document.createElement(
           "div"
@@ -1447,58 +1237,41 @@ function render() {
         data.user;
 
 
-      cell.appendChild(
-        name
-      );
+      cell.appendChild(name);
 
-      cell.appendChild(
-        user
-      );
+      cell.appendChild(user);
 
 
-      /*
-       タップ
-      */
+      /* タップで名前入力 */
 
       cell.addEventListener(
         "click",
         function() {
 
-          writeUserName(
-            index
-          );
+          writeUserName(index);
 
         }
       );
 
 
-      board.appendChild(
-        cell
-      );
+      board.appendChild(cell);
 
     }
   );
 
 
-  /*
-   名称一覧
-  */
-
   renderNameList();
-
 
   saveData();
 
 }
 
 
-/* =================================================
-   視聴者名を書く
-================================================= */
+/* ==========================================
+   名前を書く
+========================================== */
 
-function writeUserName(
-  index
-) {
+function writeUserName(index) {
 
   const project =
     getProject();
@@ -1519,12 +1292,8 @@ function writeUserName(
     );
 
 
-  if (
-    newUser === null
-  ) {
-
+  if (newUser === null) {
     return;
-
   }
 
 
@@ -1539,9 +1308,9 @@ function writeUserName(
 }
 
 
-/* =================================================
+/* ==========================================
    タイトル変更
-================================================= */
+========================================== */
 
 titleInput.addEventListener(
   "input",
@@ -1563,14 +1332,12 @@ titleInput.addEventListener(
 );
 
 
-/* =================================================
-   マス数変更
-================================================= */
+/* ==========================================
+   マスを作る
+========================================== */
 
 document
-  .getElementById(
-    "createButton"
-  )
+  .getElementById("createButton")
   .addEventListener(
     "click",
     function() {
@@ -1584,11 +1351,11 @@ document
           10
         );
 
-      if (
-        isNaN(count)
-      ) {
+
+      if (isNaN(count)) {
         count = 1;
       }
+
 
       count =
         Math.max(
@@ -1599,12 +1366,12 @@ document
           )
         );
 
+
       project.count =
         count;
 
-      adjustCells(
-        project
-      );
+
+      adjustCells(project);
 
       saveData();
 
@@ -1614,47 +1381,36 @@ document
   );
 
 
-/* =================================================
-   名前を書くボタン
-================================================= */
+/* ==========================================
+   名前を書く
+========================================== */
 
 document
-  .getElementById(
-    "nameButton"
-  )
+  .getElementById("nameButton")
   .addEventListener(
     "click",
     function() {
 
-      mode =
-        "name";
-
-      modeText.textContent =
-        "✏️ マスをタップすると名前を書けます";
+      alert(
+        "ボードのマスをタップすると、\n視聴者の名前を入力できます。"
+      );
 
     }
   );
 
 
-/* =================================================
-   名称保存
-================================================= */
+/* ==========================================
+   名称を保存
+========================================== */
 
 document
-  .getElementById(
-    "saveNamesButton"
-  )
+  .getElementById("saveNamesButton")
   .addEventListener(
     "click",
     function() {
 
       const project =
         getProject();
-
-
-      /*
-       一覧の入力欄から取得
-      */
 
       const inputs =
         document.querySelectorAll(
@@ -1682,7 +1438,6 @@ document
 
       render();
 
-
       alert(
         "マス名称を保存しました！"
       );
@@ -1691,14 +1446,12 @@ document
   );
 
 
-/* =================================================
+/* ==========================================
    名前リセット
-================================================= */
+========================================== */
 
 document
-  .getElementById(
-    "resetButton"
-  )
+  .getElementById("resetButton")
   .addEventListener(
     "click",
     function() {
@@ -1713,12 +1466,8 @@ document
         );
 
 
-      if (
-        !ok
-      ) {
-
+      if (!ok) {
         return;
-
       }
 
 
@@ -1729,8 +1478,7 @@ document
       project.cells.forEach(
         function(data) {
 
-          data.user =
-            "";
+          data.user = "";
 
         }
       );
@@ -1744,113 +1492,96 @@ document
   );
 
 
-/* =================================================
-   配信用画面
-================================================= */
+/* ==========================================
+   企画①
+========================================== */
 
 document
-  .getElementById(
-    "liveButton"
-  )
+  .getElementById("tab1")
   .addEventListener(
     "click",
     function() {
 
-      document.body
-        .classList
-        .toggle(
-          "live"
+      currentProject = 1;
+
+      updateTabs();
+
+      render();
+
+    }
+  );
+
+
+/* ==========================================
+   企画②
+========================================== */
+
+document
+  .getElementById("tab2")
+  .addEventListener(
+    "click",
+    function() {
+
+      currentProject = 2;
+
+      updateTabs();
+
+      render();
+
+    }
+  );
+
+
+/* ==========================================
+   企画③
+========================================== */
+
+document
+  .getElementById("tab3")
+  .addEventListener(
+    "click",
+    function() {
+
+      currentProject = 3;
+
+      updateTabs();
+
+      render();
+
+    }
+  );
+
+
+/* ==========================================
+   タブ表示更新
+========================================== */
+
+function updateTabs() {
+
+  document
+    .querySelectorAll(".projectTab")
+    .forEach(
+      function(tab, index) {
+
+        tab.classList.toggle(
+          "active",
+          index + 1 ===
+          currentProject
         );
 
-
-      const live =
-        document.body
-          .classList
-          .contains(
-            "live"
-          );
-
-
-      if (
-        live
-      ) {
-
-        this.textContent =
-          "↩️ 設定に戻る";
-
       }
+    );
 
-      else {
-
-        this.textContent =
-          "📺 配信用画面";
-
-      }
-
-    }
-  );
+}
 
 
-/* =================================================
-   企画①
-================================================= */
-
-document
-  .getElementById(
-    "tab1"
-  )
-  .addEventListener(
-    "click",
-    function() {
-
-      switchProject(1);
-
-    }
-  );
-
-
-/* =================================================
-   企画②
-================================================= */
-
-document
-  .getElementById(
-    "tab2"
-  )
-  .addEventListener(
-    "click",
-    function() {
-
-      switchProject(2);
-
-    }
-  );
-
-
-/* =================================================
-   企画③
-================================================= */
-
-document
-  .getElementById(
-    "tab3"
-  )
-  .addEventListener(
-    "click",
-    function() {
-
-      switchProject(3);
-
-    }
-  );
-
-
-/* =================================================
+/* ==========================================
    最初に表示
-================================================= */
+========================================== */
+
+updateTabs();
 
 render();
-
 
 </script>
 
