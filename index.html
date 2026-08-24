@@ -1,1 +1,1395 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 8px;
+  background: #ffffff;
+  color: #111111;
+  font-family: Arial, "Noto Sans JP", sans-serif;
+}
+
+#app {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+
+/* =========================
+   タイトル
+========================= */
+
+h1 {
+  text-align: center;
+  margin: 5px 0 8px;
+  font-size: 26px;
+  color: #111111;
+}
+
+#counter {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+
+/* =========================
+   設定パネル
+========================= */
+
+.panel {
+  background: #f5f5f5;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #dddddd;
+}
+
+.panel-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+label {
+  display: block;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  background: #ffffff;
+  color: #111111;
+  border: 1px solid #999999;
+  border-radius: 7px;
+  font-size: 16px;
+}
+
+
+/* =========================
+   設定ボタン
+========================= */
+
+.setting-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-top: 10px;
+}
+
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 11px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+#create {
+  background: #2196f3;
+  color: #ffffff;
+}
+
+#reset {
+  background: #e53935;
+  color: #ffffff;
+}
+
+
+/* =========================
+   操作パネル
+========================= */
+
+.operation {
+  background: #f5f5f5;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #dddddd;
+}
+
+.operation-title {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.operation-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+#editMode {
+  background: #1976d2;
+  color: #ffffff;
+}
+
+#editMode.active {
+  background: #42a5f5;
+  box-shadow: 0 0 0 3px #ffffff inset;
+}
+
+#writeMode {
+  background: #f57c00;
+  color: #ffffff;
+}
+
+#writeMode.active {
+  background: #ff9800;
+  box-shadow: 0 0 0 3px #ffffff inset;
+}
+
+#status {
+  text-align: center;
+  margin-top: 8px;
+  background: #ffffff;
+  color: #111111;
+  border-radius: 6px;
+  padding: 8px;
+  font-size: 13px;
+  border: 1px solid #dddddd;
+}
+
+
+/* =========================
+   ボード
+========================= */
+
+#board {
+  display: grid;
+  gap: 5px;
+  width: 100%;
+}
+
+
+/* =========================
+   通常のマス
+   水色＋黒文字
+========================= */
+
+.cell {
+  min-height: 75px;
+
+  background: #87CEEB;
+
+  border: 2px solid #4aa8c7;
+  border-radius: 8px;
+
+  padding: 5px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+
+  overflow: hidden;
+}
+
+
+/* =========================
+   名前が入ったマス
+   赤色＋白文字
+========================= */
+
+.cell.completed {
+  background: #e53935;
+  border-color: #b71c1c;
+}
+
+.cell.completed .cell-name,
+.cell.completed .cell-user {
+  color: #ffffff;
+}
+
+
+/* =========================
+   マス名称
+========================= */
+
+.cell-name {
+  width: 100%;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  line-height: 1.2;
+
+  word-break: break-word;
+
+  color: #111111;
+}
+
+
+/* =========================
+   視聴者名
+========================= */
+
+.cell-user {
+  width: 100%;
+
+  min-height: 18px;
+
+  margin-top: 5px;
+
+  font-size: 13px;
+  font-weight: bold;
+
+  line-height: 1.2;
+
+  word-break: break-word;
+
+  color: #111111;
+}
+
+
+/* =========================
+   名称編集モード
+========================= */
+
+body.editing .cell {
+  border-color: #1976d2;
+}
+
+
+/* =========================
+   100マス以上
+========================= */
+
+#board.many .cell {
+  min-height: 52px;
+}
+
+#board.many .cell-name {
+  font-size: 10px;
+}
+
+#board.many .cell-user {
+  font-size: 8px;
+  margin-top: 2px;
+}
+
+
+/* =========================
+   スマホ
+========================= */
+
+@media (max-width: 600px) {
+
+  body {
+    padding: 4px;
+  }
+
+  h1 {
+    font-size: 22px;
+  }
+
+  #counter {
+    font-size: 17px;
+  }
+
+  .cell {
+    min-height: 62px;
+    padding: 3px;
+  }
+
+  .cell-name {
+    font-size: 11px;
+  }
+
+  .cell-user {
+    font-size: 9px;
+    margin-top: 3px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 10px 4px;
+  }
+
+  #board.many .cell {
+    min-height: 45px;
+  }
+
+  #board.many .cell-name {
+    font-size: 8px;
+  }
+
+  #board.many .cell-user {
+    font-size: 7px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div id="app">
+
+
+<!-- =========================
+     タイトル
+========================= -->
+
+<h1 id="title">
+47都道府県制覇！
+</h1>
+
+
+<!-- =========================
+     制覇数
+========================= -->
+
+<div id="counter">
+
+制覇
+<span id="done">0</span>
+/
+<span id="total">47</span>
+
+</div>
+
+
+<!-- =========================
+     企画設定
+========================= -->
+
+<div class="panel">
+
+<div class="panel-title">
+⚙️ 企画設定
+</div>
+
+
+<label>
+タイトル
+</label>
+
+<input
+id="titleInput"
+type="text"
+value="47都道府県制覇！"
+>
+
+
+<label>
+マス数（1〜200）
+</label>
+
+<input
+id="countInput"
+type="number"
+min="1"
+max="200"
+value="47"
+inputmode="numeric"
+>
+
+
+<div class="setting-buttons">
+
+<button
+id="create"
+type="button"
+>
+ボードを作る
+</button>
+
+
+<button
+id="reset"
+type="button"
+>
+全リセット
+</button>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     操作
+========================= -->
+
+<div class="operation">
+
+<div class="operation-title">
+🎮 操作
+</div>
+
+
+<div class="operation-buttons">
+
+<button
+id="editMode"
+type="button"
+>
+🔵 名称編集
+</button>
+
+
+<button
+id="writeMode"
+type="button"
+>
+🟠 名前を書く
+</button>
+
+</div>
+
+
+<div id="status">
+通常モード
+</div>
+
+</div>
+
+
+<!-- =========================
+     ボード
+========================= -->
+
+<div id="board"></div>
+
+
+</div>
+
+
+<script>
+
+
+/* =====================================================
+   47都道府県
+===================================================== */
+
+var prefectures = [
+
+  "北海道",
+  "青森県",
+  "岩手県",
+  "宮城県",
+  "秋田県",
+  "山形県",
+  "福島県",
+  "茨城県",
+  "栃木県",
+  "群馬県",
+  "埼玉県",
+  "千葉県",
+  "東京都",
+  "神奈川県",
+  "新潟県",
+  "富山県",
+  "石川県",
+  "福井県",
+  "山梨県",
+  "長野県",
+  "岐阜県",
+  "静岡県",
+  "愛知県",
+  "三重県",
+  "滋賀県",
+  "京都府",
+  "大阪府",
+  "兵庫県",
+  "奈良県",
+  "和歌山県",
+  "鳥取県",
+  "島根県",
+  "岡山県",
+  "広島県",
+  "山口県",
+  "徳島県",
+  "香川県",
+  "愛媛県",
+  "高知県",
+  "福岡県",
+  "佐賀県",
+  "長崎県",
+  "熊本県",
+  "大分県",
+  "宮崎県",
+  "鹿児島県",
+  "沖縄県"
+
+];
+
+
+/* =====================================================
+   データ
+===================================================== */
+
+var cells = [];
+
+var mode = "normal";
+
+
+/* =====================================================
+   ボード作成
+===================================================== */
+
+function createBoard() {
+
+  var countInput =
+    document.getElementById(
+      "countInput"
+    );
+
+
+  var count =
+    parseInt(
+      countInput.value,
+      10
+    );
+
+
+  /* 数字が正しくない場合 */
+
+  if (
+    isNaN(count)
+  ) {
+
+    count = 47;
+
+  }
+
+
+  /* 1未満なら1 */
+
+  if (
+    count < 1
+  ) {
+
+    count = 1;
+
+  }
+
+
+  /* 200超なら200 */
+
+  if (
+    count > 200
+  ) {
+
+    count = 200;
+
+  }
+
+
+  countInput.value =
+    count;
+
+
+  /* タイトル */
+
+  var title =
+    document
+      .getElementById(
+        "titleInput"
+      )
+      .value
+      .trim();
+
+
+  if (
+    title === ""
+  ) {
+
+    title =
+      "参加型企画";
+
+  }
+
+
+  document
+    .getElementById(
+      "title"
+    )
+    .textContent =
+    title;
+
+
+  /* データを作る */
+
+  cells = [];
+
+
+  for (
+    var i = 0;
+    i < count;
+    i++
+  ) {
+
+    var cellName;
+
+
+    /* 47都道府県 */
+
+    if (
+      i < prefectures.length
+    ) {
+
+      cellName =
+        prefectures[i];
+
+    }
+
+    /* 48マス目以降 */
+
+    else {
+
+      cellName =
+        "マス" +
+        (i + 1);
+
+    }
+
+
+    cells.push({
+
+      name: cellName,
+
+      user: ""
+
+    });
+
+  }
+
+
+  /* 通常モード */
+
+  mode =
+    "normal";
+
+
+  updateStatus();
+
+  drawBoard();
+
+}
+
+
+/* =====================================================
+   列数
+===================================================== */
+
+function getColumns(count) {
+
+  if (count === 1) {
+
+    return 1;
+
+  }
+
+
+  if (count === 2) {
+
+    return 2;
+
+  }
+
+
+  if (count <= 4) {
+
+    return 2;
+
+  }
+
+
+  if (count <= 9) {
+
+    return 3;
+
+  }
+
+
+  if (count <= 16) {
+
+    return 4;
+
+  }
+
+
+  if (count <= 25) {
+
+    return 5;
+
+  }
+
+
+  if (count <= 36) {
+
+    return 6;
+
+  }
+
+
+  if (count <= 49) {
+
+    return 7;
+
+  }
+
+
+  if (count <= 64) {
+
+    return 8;
+
+  }
+
+
+  if (count <= 81) {
+
+    return 9;
+
+  }
+
+
+  if (count <= 100) {
+
+    return 10;
+
+  }
+
+
+  if (count <= 121) {
+
+    return 11;
+
+  }
+
+
+  if (count <= 144) {
+
+    return 12;
+
+  }
+
+
+  if (count <= 169) {
+
+    return 13;
+
+  }
+
+
+  if (count <= 196) {
+
+    return 14;
+
+  }
+
+
+  return 15;
+
+}
+
+
+/* =====================================================
+   ボード表示
+===================================================== */
+
+function drawBoard() {
+
+  var board =
+    document.getElementById(
+      "board"
+    );
+
+
+  board.innerHTML = "";
+
+
+  var count =
+    cells.length;
+
+
+  var columns =
+    getColumns(
+      count
+    );
+
+
+  board.style.gridTemplateColumns =
+    "repeat(" +
+    columns +
+    ", 1fr)";
+
+
+  /* 100マス以上 */
+
+  if (
+    count >= 100
+  ) {
+
+    board.classList.add(
+      "many"
+    );
+
+  }
+
+  else {
+
+    board.classList.remove(
+      "many"
+    );
+
+  }
+
+
+  /* マスを作る */
+
+  for (
+    var i = 0;
+    i < cells.length;
+    i++
+  ) {
+
+    createCell(i);
+
+  }
+
+
+  updateCounter();
+
+}
+
+
+/* =====================================================
+   マス作成
+===================================================== */
+
+function createCell(index) {
+
+  var cell =
+    document.createElement(
+      "div"
+    );
+
+
+  cell.className =
+    "cell";
+
+
+  /* 名前が登録されている */
+
+  if (
+    cells[index].user !== ""
+  ) {
+
+    cell.classList.add(
+      "completed"
+    );
+
+  }
+
+
+  /* マス名称 */
+
+  var name =
+    document.createElement(
+      "div"
+    );
+
+
+  name.className =
+    "cell-name";
+
+
+  name.textContent =
+    cells[index].name;
+
+
+  /* 視聴者名 */
+
+  var user =
+    document.createElement(
+      "div"
+    );
+
+
+  user.className =
+    "cell-user";
+
+
+  user.textContent =
+    cells[index].user;
+
+
+  cell.appendChild(
+    name
+  );
+
+
+  cell.appendChild(
+    user
+  );
+
+
+  /* =================================================
+     タップしたとき
+  ================================================= */
+
+  cell.onclick =
+    function() {
+
+
+      /* 名称編集 */
+
+      if (
+        mode === "edit"
+      ) {
+
+        editName(index);
+
+        return;
+
+      }
+
+
+      /* 名前を書く */
+
+      if (
+        mode === "write"
+      ) {
+
+        writeName(index);
+
+        return;
+
+      }
+
+    };
+
+
+  document
+    .getElementById(
+      "board"
+    )
+    .appendChild(
+      cell
+    );
+
+}
+
+
+/* =====================================================
+   名称編集ボタン
+===================================================== */
+
+document
+  .getElementById(
+    "editMode"
+  )
+  .onclick =
+  function() {
+
+
+    if (
+      mode === "edit"
+    ) {
+
+      mode =
+        "normal";
+
+    }
+
+    else {
+
+      mode =
+        "edit";
+
+    }
+
+
+    updateStatus();
+
+    drawBoard();
+
+  };
+
+
+/* =====================================================
+   名前を書くボタン
+===================================================== */
+
+document
+  .getElementById(
+    "writeMode"
+  )
+  .onclick =
+  function() {
+
+
+    if (
+      mode === "write"
+    ) {
+
+      mode =
+        "normal";
+
+    }
+
+    else {
+
+      mode =
+        "write";
+
+    }
+
+
+    updateStatus();
+
+    drawBoard();
+
+  };
+
+
+/* =====================================================
+   マス名称変更
+===================================================== */
+
+function editName(index) {
+
+  var newName =
+    window.prompt(
+
+      "新しいマス名称を入力してください",
+
+      cells[index].name
+
+    );
+
+
+  /* キャンセル */
+
+  if (
+    newName === null
+  ) {
+
+    return;
+
+  }
+
+
+  newName =
+    newName.trim();
+
+
+  /* 空欄 */
+
+  if (
+    newName === ""
+  ) {
+
+    window.alert(
+      "名称を入力してください"
+    );
+
+    return;
+
+  }
+
+
+  /* 名前変更 */
+
+  cells[index].name =
+    newName;
+
+
+  /* 通常モードに戻す */
+
+  mode =
+    "normal";
+
+
+  updateStatus();
+
+  drawBoard();
+
+}
+
+
+/* =====================================================
+   名前を書く
+===================================================== */
+
+function writeName(index) {
+
+  var newUser =
+    window.prompt(
+
+      cells[index].name +
+      "\n\nギフトを送ってくれた人の名前",
+
+      cells[index].user
+
+    );
+
+
+  /* キャンセル */
+
+  if (
+    newUser === null
+  ) {
+
+    return;
+
+  }
+
+
+  /* 登録 */
+
+  cells[index].user =
+    newUser.trim();
+
+
+  /* 表示更新 */
+
+  drawBoard();
+
+}
+
+
+/* =====================================================
+   ステータス表示
+===================================================== */
+
+function updateStatus() {
+
+  var status =
+    document.getElementById(
+      "status"
+    );
+
+
+  var editButton =
+    document.getElementById(
+      "editMode"
+    );
+
+
+  var writeButton =
+    document.getElementById(
+      "writeMode"
+    );
+
+
+  /* リセット */
+
+  editButton.classList.remove(
+    "active"
+  );
+
+
+  writeButton.classList.remove(
+    "active"
+  );
+
+
+  document.body.classList.remove(
+    "editing"
+  );
+
+
+  /* 名称編集 */
+
+  if (
+    mode === "edit"
+  ) {
+
+    editButton.classList.add(
+      "active"
+    );
+
+
+    document.body.classList.add(
+      "editing"
+    );
+
+
+    status.textContent =
+      "🔵 名称編集ON → 変更したいマスをタップ";
+
+  }
+
+
+  /* 名前を書く */
+
+  else if (
+    mode === "write"
+  ) {
+
+    writeButton.classList.add(
+      "active"
+    );
+
+
+    status.textContent =
+      "🟠 名前を書く → 書きたいマスをタップ";
+
+  }
+
+
+  /* 通常 */
+
+  else {
+
+    status.textContent =
+      "通常モード";
+
+  }
+
+}
+
+
+/* =====================================================
+   制覇数
+===================================================== */
+
+function updateCounter() {
+
+  var completed =
+    0;
+
+
+  for (
+    var i = 0;
+    i < cells.length;
+    i++
+  ) {
+
+    if (
+      cells[i].user !== ""
+    ) {
+
+      completed++;
+
+    }
+
+  }
+
+
+  document.getElementById(
+    "done"
+  ).textContent =
+    completed;
+
+
+  document.getElementById(
+    "total"
+  ).textContent =
+    cells.length;
+
+}
+
+
+/* =====================================================
+   ボードを作る
+===================================================== */
+
+document
+  .getElementById(
+    "create"
+  )
+  .onclick =
+  function() {
+
+    createBoard();
+
+  };
+
+
+/* =====================================================
+   全リセット
+===================================================== */
+
+document
+  .getElementById(
+    "reset"
+  )
+  .onclick =
+  function() {
+
+
+    var ok =
+      window.confirm(
+
+        "名称と登録した名前をすべてリセットしますか？"
+
+      );
+
+
+    if (
+      !ok
+    ) {
+
+      return;
+
+    }
+
+
+    document
+      .getElementById(
+        "titleInput"
+      )
+      .value =
+      "47都道府県制覇！";
+
+
+    document
+      .getElementById(
+        "countInput"
+      )
+      .value =
+      "47";
+
+
+    createBoard();
+
+  };
+
+
+/* =====================================================
+   最初の表示
+===================================================== */
+
+createBoard();
+
+</script>
+
+</body>
+</html>
